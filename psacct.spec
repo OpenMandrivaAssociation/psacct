@@ -1,17 +1,26 @@
-%define version	6.3.2
-%define release 17mdk
+%define name	psacct
+%define version	6.4
+%define pre	1
+%if %pre
+%define release %mkrel 0.pre%pre.1
+%else
+%define release %mkrel 1
+%endif
 
 Summary:	Utilities for monitoring process activities
-Name:		psacct
+Name:		%{name}
 Version:	%{version}
 Release:	%{release}
 License:	GPL
 Group:		Monitoring
 Url:		ftp://ftp.gnu.org/pub/gnu/
+%if %pre
+Source:		http://www.physik3.uni-rostock.de/tim/kernel/utils/acct/acct-%{version}-pre%{pre}.tar.bz2
+%else
 Source:		ftp://ftp.gnu.org/pub/gnu/acct/acct-%version.tar.bz2
+%endif
 Source1:	psacct.logrotate
 Source2:	psacct.initscript
-Patch0:		psacct-log.patch
 Patch1:		psacct-6.3.2-info.patch
 Patch2:		psacct-6.3.2-biarch-utmp.patch
 Buildroot:	%{_tmppath}/%{name}-%{version}-root
@@ -19,8 +28,6 @@ Prereq:		/sbin/install-info
 Prereq:		/sbin/chkconfig
 Prereq:		rpm-helper
 BuildRequires:	texinfo
-BuildRequires:	autoconf2.1 >= 1:2.13-21mdk
-BuildRequires:	automake1.4
 
 %description
 The psacct package contains several utilities for monitoring process
@@ -34,23 +41,20 @@ Install the psacct package if you'd like to use its utilities for
 monitoring process activities on your system.
 
 %prep
+%if %pre
+%setup -q -n acct-%version-pre%pre
+%else
 %setup -q -n acct-%version
-%patch0 -p0 -b .loglocation
+%endif
 %patch1 -p1 -b .infoentry
 %patch2 -p1 -b .biarch-utmp
 
-# needed by patch0
-# ACLOCAL=aclocal-1.4 AUTOMAKE=automake-1.4 autoreconf --force
-
 %build
 %serverbuild
+
 %configure2_5x
 
-perl -p -i -e "s/\/\* #undef HAVE_LINUX_ACCT_H \*\//#define HAVE_LINUX_ACCT_H/" config.h
-
-perl -p -i -e "s@/var/account@/var/log@g" files.h
-
-perl -p -i -e "s/struct acct/struct acct_v3/g" *
+perl -p -i -e "s@/var/account@/var/log@g" files.h configure
 
 #make CFLAGS="$RPM_OPT_FLAGS" CXXFLAGS="$RPM_OPT_FLAGS" SHELL="/bin/sh"
 #make CFLAGS="$RPM_OPT_FLAGS" CXXFLAGS="$RPM_OPT_FLAGS" SHELL="/bin/sh" accounting.info
