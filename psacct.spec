@@ -24,9 +24,8 @@ Source2:	psacct.initscript
 Patch1:		psacct-6.3.2-info.patch
 Patch2:		psacct-6.3.2-biarch-utmp.patch
 Buildroot:	%{_tmppath}/%{name}-%{version}-root
-Prereq:		/sbin/install-info
-Prereq:		/sbin/chkconfig
-Prereq:		rpm-helper
+Requires(post):		info-install rpm-helper
+Requires(preun):		info-install rpm-helper
 BuildRequires:	texinfo
 
 %description
