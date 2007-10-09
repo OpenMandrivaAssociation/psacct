@@ -61,25 +61,25 @@ perl -p -i -e "s@/var/account@/var/log@g" files.h configure
 #make SHELL="/bin/sh" accounting.info
 
 %install
-rm -rf $RPM_BUILD_ROOT
-mkdir -p $RPM_BUILD_ROOT/{sbin,usr,var/log}
+rm -rf %{buildroot}
+mkdir -p %{buildroot}/{sbin,usr,var/log}
 %makeinstall
 
 # move accton to /sbin -- leave historical symlink
-mv $RPM_BUILD_ROOT%{_sbindir}/accton $RPM_BUILD_ROOT/sbin/accton
-ln -s ../../sbin/accton $RPM_BUILD_ROOT%{_sbindir}/accton
+mv %{buildroot}%{_sbindir}/accton %{buildroot}/sbin/accton
+ln -s ../../sbin/accton %{buildroot}%{_sbindir}/accton
 
 # Because of the last command conflicting with the one from SysVinit
-mv $RPM_BUILD_ROOT%{_bindir}/last $RPM_BUILD_ROOT%{_bindir}/last-psacct
-mv $RPM_BUILD_ROOT%{_mandir}/man1/last.1 $RPM_BUILD_ROOT%{_mandir}/man1/last-psacct.1
+mv %{buildroot}%{_bindir}/last %{buildroot}%{_bindir}/last-psacct
+mv %{buildroot}%{_mandir}/man1/last.1 %{buildroot}%{_mandir}/man1/last-psacct.1
 
-touch $RPM_BUILD_ROOT/var/log/pacct $RPM_BUILD_ROOT/var/log/usracct $RPM_BUILD_ROOT/var/log/savacct
+touch %{buildroot}/var/log/pacct %{buildroot}/var/log/usracct %{buildroot}/var/log/savacct
 
-install -D -m 644 %{SOURCE1} $RPM_BUILD_ROOT/etc/logrotate.d/psacct
-install -D -m 755 %{SOURCE2} $RPM_BUILD_ROOT/%{_initrddir}/psacct
+install -D -m 644 %{SOURCE1} %{buildroot}/etc/logrotate.d/psacct
+install -D -m 755 %{SOURCE2} %{buildroot}/%{_initrddir}/psacct
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %post
 # Create initial log files so that logrotate doesn't complain
