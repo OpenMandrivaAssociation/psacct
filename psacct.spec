@@ -2,7 +2,7 @@
 %define version	6.4
 %define pre	1
 %if %pre
-%define release %mkrel 0.pre%pre.5
+%define release %mkrel 0.pre%pre.6
 %else
 %define release %mkrel 1
 %endif
@@ -70,8 +70,10 @@ mv %{buildroot}%{_sbindir}/accton %{buildroot}/sbin/accton
 ln -s ../../sbin/accton %{buildroot}%{_sbindir}/accton
 
 # Because of the last command conflicting with the one from SysVinit
-mv %{buildroot}%{_bindir}/last %{buildroot}%{_bindir}/last-psacct
-mv %{buildroot}%{_mandir}/man1/last.1 %{buildroot}%{_mandir}/man1/last-psacct.1
+# We used to rename it, just delete it instead - it doesn't work any
+# more, and this is what Debian and Fedora do - AdamW 2008/03
+rm -f %{buildroot}%{_bindir}/last
+rm -f %{buildroot}%{_mandir}/man1/last.1
 
 touch %{buildroot}/var/log/pacct %{buildroot}/var/log/usracct %{buildroot}/var/log/savacct
 
