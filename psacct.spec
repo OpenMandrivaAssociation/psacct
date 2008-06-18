@@ -4,7 +4,7 @@
 %if %pre
 %define release %mkrel 0.pre%pre.6
 %else
-%define release %mkrel 1
+%define release %mkrel 2
 %endif
 
 Summary:	Utilities for monitoring process activities
