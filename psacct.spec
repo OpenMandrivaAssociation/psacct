@@ -2,7 +2,7 @@
 %define version	6.4
 %define pre	1
 %if %pre
-%define release %mkrel 0.pre%pre.8
+%define release %mkrel 0.pre%pre.9
 %else
 %define release %mkrel 2
 %endif
