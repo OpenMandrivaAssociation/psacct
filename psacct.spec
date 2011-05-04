@@ -2,9 +2,9 @@
 %define version	6.4
 %define pre	1
 %if %pre
-%define release %mkrel 0.pre%pre.11
+%define release %mkrel 0.pre%pre.12
 %else
-%define release %mkrel 4
+%define release %mkrel 5
 %endif
 
 Summary:	Utilities for monitoring process activities
