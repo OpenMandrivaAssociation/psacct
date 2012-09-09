@@ -1,31 +1,21 @@
 %define name	psacct
-%define version	6.4
-%define pre	1
-%if %pre
-%define release %mkrel 0.pre%pre.12
-%else
-%define release %mkrel 5
-%endif
+%define version	6.5.5
+%define release %mkrel 1
 
 Summary:	Utilities for monitoring process activities
 Name:		%{name}
 Version:	%{version}
 Release:	%{release}
-License:	GPL
+License:	GPLv3+
 Group:		Monitoring
-Url:		ftp://ftp.gnu.org/pub/gnu/
-%if %pre
-Source:		http://www.physik3.uni-rostock.de/tim/kernel/utils/acct/acct-%{version}-pre%{pre}.tar.bz2
-%else
-Source:		ftp://ftp.gnu.org/pub/gnu/acct/acct-%version.tar.bz2
-%endif
+Url:		http://www.gnu.org/software/acct/
+Source:		ftp://ftp.gnu.org/pub/gnu/acct/acct-%version.tar.gz
 Source1:	psacct.logrotate
 Source2:	psacct.initscript
-Patch1:		psacct-6.3.2-info.patch
-Patch2:		psacct-6.3.2-biarch-utmp.patch
+
 Buildroot:	%{_tmppath}/%{name}-%{version}-root
 Requires(post):		info-install rpm-helper
-Requires(preun):		info-install rpm-helper
+Requires(preun):	info-install rpm-helper
 BuildRequires:	texinfo
 
 %description
@@ -34,19 +24,14 @@ activities, including ac, lastcomm, accton and sa.  The ac command
 displays statistics about how long users have been logged on.  The
 lastcomm command displays information about previous executed commands.
 The accton command turns process accounting on or off.  The sa command
-summarizes information about previously executed commmands.
+summarizes information about previously executed commands.
 
 Install the psacct package if you'd like to use its utilities for
 monitoring process activities on your system.
 
+
 %prep
-%if %pre
-%setup -q -n acct-%version-pre%pre
-%else
 %setup -q -n acct-%version
-%endif
-%patch1 -p1 -b .infoentry
-%patch2 -p1 -b .biarch-utmp
 
 %build
 %serverbuild
@@ -55,10 +40,7 @@ monitoring process activities on your system.
 
 perl -p -i -e "s@/var/account@/var/log@g" files.h configure
 
-#make CFLAGS="$RPM_OPT_FLAGS" CXXFLAGS="$RPM_OPT_FLAGS" SHELL="/bin/sh"
-#make CFLAGS="$RPM_OPT_FLAGS" CXXFLAGS="$RPM_OPT_FLAGS" SHELL="/bin/sh" accounting.info
 %make
-#make SHELL="/bin/sh" accounting.info
 
 %install
 rm -rf %{buildroot}
@@ -66,8 +48,11 @@ mkdir -p %{buildroot}/{sbin,usr,var/log}
 %makeinstall
 
 # move accton to /sbin -- leave historical symlink
-mv %{buildroot}%{_sbindir}/accton %{buildroot}/sbin/accton
-ln -s ../../sbin/accton %{buildroot}%{_sbindir}/accton
+## mv %{buildroot}%{_sbindir}/accton %{buildroot}/sbin/accton
+## ln -s ../../sbin/accton %{buildroot}%{_sbindir}/accton
+
+# move it back to /usr/sbin - solbu, september 2012
+ln -s ../..%{_sbindir}/accton %{buildroot}/sbin/accton
 
 # Because of the last command conflicting with the one from SysVinit
 # We used to rename it, just delete it instead - it doesn't work any
@@ -101,7 +86,7 @@ fi
 
 %files
 %defattr(-,root,root)
-%doc README NEWS INSTALL AUTHORS ChangeLog COPYING
+%doc README NEWS INSTALL AUTHORS ChangeLog
 /sbin/*
 %{_sbindir}/*
 %{_bindir}/*
