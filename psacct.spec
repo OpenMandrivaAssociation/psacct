@@ -1,6 +1,6 @@
 %define name	psacct
 %define version	6.5.5
-%define release %mkrel 1
+%define release 1
 
 Summary:	Utilities for monitoring process activities
 Name:		%{name}
@@ -13,7 +13,6 @@ Source:		ftp://ftp.gnu.org/pub/gnu/acct/acct-%version.tar.gz
 Source1:	psacct.logrotate
 Source2:	psacct.initscript
 
-Buildroot:	%{_tmppath}/%{name}-%{version}-root
 Requires(post):		info-install rpm-helper
 Requires(preun):	info-install rpm-helper
 BuildRequires:	texinfo
@@ -43,16 +42,8 @@ perl -p -i -e "s@/var/account@/var/log@g" files.h configure
 %make
 
 %install
-rm -rf %{buildroot}
-mkdir -p %{buildroot}/{sbin,usr,var/log}
+mkdir -p %{buildroot}%{_logdir}
 %makeinstall
-
-# move accton to /sbin -- leave historical symlink
-## mv %{buildroot}%{_sbindir}/accton %{buildroot}/sbin/accton
-## ln -s ../../sbin/accton %{buildroot}%{_sbindir}/accton
-
-# move it back to /usr/sbin - solbu, september 2012
-ln -s %{_sbindir}/accton %{buildroot}/sbin/accton
 
 # Because of the last command conflicting with the one from SysVinit
 # We used to rename it, just delete it instead - it doesn't work any
@@ -85,9 +76,7 @@ fi
 
 
 %files
-%defattr(-,root,root)
 %doc README NEWS INSTALL AUTHORS ChangeLog
-/sbin/*
 %{_sbindir}/*
 %{_bindir}/*
 %{_mandir}/*/*
