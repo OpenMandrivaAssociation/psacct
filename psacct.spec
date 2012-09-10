@@ -52,7 +52,7 @@ mkdir -p %{buildroot}/{sbin,usr,var/log}
 ## ln -s ../../sbin/accton %{buildroot}%{_sbindir}/accton
 
 # move it back to /usr/sbin - solbu, september 2012
-ln -s ../..%{_sbindir}/accton %{buildroot}/sbin/accton
+ln -s %{_sbindir}/accton %{buildroot}/sbin/accton
 
 # Because of the last command conflicting with the one from SysVinit
 # We used to rename it, just delete it instead - it doesn't work any
