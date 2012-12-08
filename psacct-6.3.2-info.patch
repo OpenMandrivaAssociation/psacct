@@ -1,0 +1,14 @@
+--- acct-6.3.2/accounting.texi	Tue Mar 10 19:07:25 1998
++++ acct-6.3.2/accounting.texi.mdk	Thu Oct  4 12:30:31 2001
+@@ -1,5 +1,11 @@
+ \input texinfo   @c -*-texinfo-*-
+ @setfilename accounting.info
++
++@c info directory entry
++@direntry
++* accounting: (accounting).          The GNU Process Accounting Suite.
++@end direntry
++
+ @settitle Accounting Utilities Manual
+ 
+ @include version.texi

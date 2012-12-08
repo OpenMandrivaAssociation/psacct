@@ -1,0 +1,24 @@
+# syslog logrotate configuration
+/var/log/pacct {
+        create 644 root root
+        daily
+        rotate 31
+        compress
+        delaycompress
+        missingok
+        postrotate
+                [ -f /var/lock/subsys/psacct ] && /sbin/accton /var/log/pacct
+        endscript
+}
+/var/log/savacct {
+        create 644 root root
+        monthly
+        compress
+        missingok
+}
+/var/log/usracct {
+        create 644 root root
+        monthly
+        compress
+        missingok
+}

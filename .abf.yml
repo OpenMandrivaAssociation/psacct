@@ -1,4 +1,2 @@
 sources:
-  "acct-6.5.5.tar.gz:"	907456b1dcf14c5079f834338e2de32cd7371a73
-  "psacct.initscript:"	f06bf89bb7e7299e3ae2b5c894245225313c2680
-  "psacct.logrotate:"	caffd0f625be033612a628cd781f4fefef7534d8
+  "acct-6.4-pre1.tar.bz2": ffc2d7bb54d1359a0e46be53918c8058cecd5cc5

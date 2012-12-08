@@ -1,0 +1,30 @@
+--- acct-6.3.2/utmp_rd.c.biarch-utmp	1997-10-13 20:28:36.000000000 -0400
++++ acct-6.3.2/utmp_rd.c	2003-04-08 13:24:51.000000000 -0400
+@@ -118,7 +118,10 @@ print_utmp_record (struct utmp *rec, FIL
+       fprintf (out, "%-*.*s|", HOST_LEN, HOST_LEN, rec->ut_host);
+ #endif
+ 
+-      fputs (ctime ((time_t *) &(rec->ut_time)), out);
++	  {
++		time_t the_time = rec->ut_time;
++		fputs (ctime ((time_t *) &the_time), out);
++	  }
+     }
+ }
+ 
+--- acct-6.3.2/al_share.cpp.biarch-utmp	1997-10-13 20:28:36.000000000 -0400
++++ acct-6.3.2/al_share.cpp	2003-04-08 13:24:33.000000000 -0400
+@@ -114,11 +114,12 @@ parse_entries ()
+ 	{
+ 	  if (print_file_problems)
+ 	    {
++	      time_t the_time = rec->ut_time;
+ 	      utmp_print_file_and_line (stddebug);
+ 	      fprintf (stddebug, ": problem: time warp (%-24.24s",
+ 		       ctime (&last_time));
+ 	      fprintf (stddebug, " -> %-24.24s)\n",
+-		       ctime ((time_t *) &(rec->ut_time)));
++		       ctime ((time_t *) &the_time));
+ 	    }
+ 
+ #ifdef BACKWARDS

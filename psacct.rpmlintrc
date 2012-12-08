@@ -1,0 +1,2 @@
+addFilter("info-files-with-install-info-postun.*")
+addFilter("info-files-with-install-info-postin.*")
