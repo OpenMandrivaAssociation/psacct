@@ -1,10 +1,10 @@
 %define name	psacct
-%define version	6.4
-%define pre	1
+%define version	6.6.1
+%define pre	0
 %if %pre
-%define release %mkrel 1.pre%pre.14
+%define release 1.pre%pre.15
 %else
-%define release %mkrel 7
+%define release 1
 %endif
 
 Summary:	Utilities for monitoring process activities
@@ -13,16 +13,15 @@ Version:	%{version}
 Release:	%{release}
 License:	GPL
 Group:		Monitoring
-Url:		ftp://ftp.gnu.org/pub/gnu/
+Url:		ftp://ftp.gnu.org/pub/gnu/acct
 %if %pre
 Source:		http://www.physik3.uni-rostock.de/tim/kernel/utils/acct/acct-%{version}-pre%{pre}.tar.bz2
 %else
-Source:		ftp://ftp.gnu.org/pub/gnu/acct/acct-%version.tar.bz2
+Source:		ftp://ftp.gnu.org/pub/gnu/acct/acct-%version.tar.gz
 %endif
 Source1:	psacct.logrotate
 Source2:	psacct.initscript
-Patch1:		psacct-6.3.2-info.patch
-Patch2:		psacct-6.3.2-biarch-utmp.patch
+Patch1:		acct-6.6.1-texinfo5.1.patch
 Requires(post):		rpm-helper
 Requires(preun):	rpm-helper
 BuildRequires:	texinfo
@@ -44,8 +43,7 @@ monitoring process activities on your system.
 %else
 %setup -q -n acct-%version
 %endif
-%patch1 -p1 -b .infoentry
-%patch2 -p1 -b .biarch-utmp
+%patch1 -p1
 
 %build
 %serverbuild

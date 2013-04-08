@@ -1,0 +1,11 @@
+--- acct-6.6.1/accounting.texi.orig	2013-04-08 06:45:16.595990226 +0100
++++ acct-6.6.1/accounting.texi	2013-04-08 06:45:30.532989412 +0100
+@@ -460,7 +460,7 @@
+ @end table
+ 
+ @section Problems
+-
++@raisesections
+ For no fault of @code{ac}'s, if two logins occur at the same time
+ (within a second of each other), each @code{login} process will try to
+ write an entry to the @code{wtmp} file.  With file system
