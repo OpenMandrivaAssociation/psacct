@@ -4,7 +4,7 @@
 %if %pre
 %define release 1.pre%pre.15
 %else
-%define release 1
+%define release 2
 %endif
 
 Summary:	Utilities for monitoring process activities
