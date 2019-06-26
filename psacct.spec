@@ -1,6 +1,6 @@
 Summary:	Utilities for monitoring process activities
 Name:		psacct
-Version:	6.6.1
+Version:	6.6.4
 Release:	10
 License:	GPLv2
 Group:		Monitoring
