@@ -25,7 +25,7 @@ monitoring process activities on your system.
 
 %prep
 %setup -qn acct-%{version}
-%apply_patches
+%autopatch -p1
 
 %build
 %serverbuild
