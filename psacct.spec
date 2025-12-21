@@ -9,6 +9,11 @@ Source0:	ftp://ftp.gnu.org/pub/gnu/acct/acct-%{version}.tar.gz
 Source1:	psacct.logrotate
 Source2:	psacct.initscript
 Patch1:		acct-6.6.1-texinfo5.1.patch
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	texinfo
 Requires(post,preun):	rpm-helper
 
